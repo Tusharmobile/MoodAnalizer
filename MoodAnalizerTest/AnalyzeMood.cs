@@ -4,6 +4,10 @@ namespace MoodAnalyzerTest
 {
     internal class AnalyzeMood
     {
+        public AnalyzeMood()
+        {
+        }
+
         public AnalyzeMood(string v)
         {
         }
