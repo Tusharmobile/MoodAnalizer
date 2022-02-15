@@ -9,7 +9,17 @@ using System.Threading.Tasks;
 namespace MoodAnalyzer
 {
     public class MoodAnalyzerReflector
-    {
+    {   /// <summary>
+        /// CreateMoodAnalyse method to create object of MoodAnalyse class.
+        /// </summary>
+        /// <param name="className">Name of the class.</param>
+        /// <param name="constructorName">Name of the constructor.</param>
+        /// <returns></returns>
+        /// <exception cref="MoodAnalyzer.MoodAnalyzerException">
+        /// Class not found
+        /// or
+        /// Constructor not found
+        /// </exception>
         public static object CreateMoodAnalyse(string className, string constructorName)
         {
             // create the pattern and checks whether constructor name and class name are equal
@@ -127,5 +137,31 @@ namespace MoodAnalyzer
                 throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.NO_SUCH_METHOD, "No method found");
             }
         }
+        /// <summary>
+        /// Use reflection to set field dynamically.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="fieldName"></param>
+        /// <returns></returns>
+        public static string SetFieldDynamic(string message, string fieldName)
+        {
+            try
+            {
+                AnalyzeMood moodAnalyze = new AnalyzeMood();
+                Type type = typeof(AnalyzeMood);
+                FieldInfo fieldInfo = type.GetField(fieldName, BindingFlags.Public | BindingFlags.Instance);
+                if (message == null)
+                {
+                    throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.NULL_MOOD, "Message should not be null");
+                }
+                fieldInfo.SetValue(moodAnalyze, message);
+                return moodAnalyze.message;
+            }
+            catch (NullReferenceException)
+            {
+                throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.NO_SUCH_FIELD, "Field not found");
+            }
+        }
     }
 }
+
