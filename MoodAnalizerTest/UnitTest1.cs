@@ -6,6 +6,7 @@ using System;
 namespace MoodAnalyzerTest
 {
     [TestClass]
+
     public class UnitTest1
     {
         [TestMethod]
